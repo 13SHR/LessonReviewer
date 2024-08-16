@@ -23,6 +23,7 @@ int main(int argc, char** argv) {
     char *fname = malloc(150*sizeof(char));
     printf("Enter the name of the list file: ");
     scanf("%s", fname);
+    getchar();
     FILE *f = open(fname);
     free(fname);
 
@@ -100,33 +101,25 @@ void freeList(char*** list) {
 
 void loop(char*** wordList, int number) {
     srand(time(NULL));
-    int count = 1;
-    int n;
-    char strBuff[200] = "";
 
+    int count = 1, lineId;
+    char *l = calloc(10, sizeof(char));
+    unsigned n = 10;
     bool *success = calloc(number, sizeof(bool));
-    while (count <= number) {
-        strBuff[0] = 0;
-        n = rand() % number;
 
-        if (!success[n]) {
+    while (count <= number) {
+        lineId = rand() % number;
+
+        if (!success[lineId]) {
             printf("(%d/%d) ", count, number);
-            printf("%s: ", wordList[n][rand() % n_categories]);
+            printf("%s:\n", wordList[lineId][rand() % n_categories]);
             bool good = true;
-            for (int i = 0; i < n_categories; i++) {
-                scanf("%s", strBuff);
-                if (strcmp(wordList[n][i], strBuff)) {
-                    good = false;
-                    strBuff[0] = 0;
-                    for (int j = 0; j < n_categories; j++) {
-                        strcat(strcat(strBuff, wordList[n][j]), "\x9");
-                    }
-                    printf("Wrong! It was \x9%s\n", strBuff);
-                    i = n_categories;
-                }
+            for (int i = 0; i < n_categories && good; i++) {
+                getLine(l, &n);
+                good = checkAnswer(l, wordList[lineId][i], wordList, lineId);
             }
             if (good) {
-                success[n] = true;
+                success[lineId] = true;
                 count++;
             }
         }
@@ -135,3 +128,35 @@ void loop(char*** wordList, int number) {
     printf("Well done! You did all the lesson!\nCome back later \e[31m\e[107m<3\e[m\n");
 
     return;
+}
+
+void getLine(char *line, unsigned *size) {
+    unsigned n = 0;
+    char c;
+    scanf("%c", &c);
+
+    while (c != '\n') {
+        if (*size == n + 1) {
+            realloc(line, 2*(*size));
+            (*size) *= 2; 
+        }
+        line[n] = c;
+        scanf("%c", &c);
+        n++;
+    }
+    line[n] = 0;
+}
+
+bool checkAnswer(char *answer, char *solution, char ***wordList, int lineId) {
+    if (strcmp(answer, solution)) {
+        char strBuff[200] = "";
+        for (int j = 0; j < n_categories; j++) {
+            strcat(strcat(strBuff, wordList[lineId][j]), "\x9");
+        }
+        printf("Wrong! It was \x9%s\n", strBuff);
+
+        return false;
+    }
+
+    return true;
+}
