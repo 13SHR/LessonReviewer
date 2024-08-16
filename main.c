@@ -115,7 +115,7 @@ void loop(char*** wordList, int number) {
             printf("%s:\n", wordList[lineId][rand() % n_categories]);
             bool good = true;
             for (int i = 0; i < n_categories && good; i++) {
-                getLine(l, &n);
+                l = getLine(l, &n);
                 good = checkAnswer(l, wordList[lineId][i], wordList, lineId);
             }
             if (good) {
@@ -127,17 +127,19 @@ void loop(char*** wordList, int number) {
 
     printf("Well done! You did all the lesson!\nCome back later \e[31m\e[107m<3\e[m\n");
 
+    free(l);
+    free(success);
     return;
 }
 
-void getLine(char *line, unsigned *size) {
+char* getLine(char *line, unsigned *size) {
     unsigned n = 0;
     char c;
     scanf("%c", &c);
 
     while (c != '\n') {
         if (*size == n + 1) {
-            realloc(line, 2*(*size));
+            line = realloc(line, 2*(*size));
             (*size) *= 2; 
         }
         line[n] = c;
@@ -145,6 +147,8 @@ void getLine(char *line, unsigned *size) {
         n++;
     }
     line[n] = 0;
+
+    return line;
 }
 
 bool checkAnswer(char *answer, char *solution, char ***wordList, int lineId) {
