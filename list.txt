@@ -26,7 +26,7 @@ cast	cast	cast	jeter, distribuer (rôles)
 catch	caught	caught	attraper
 chide	chid, chode	chid, chidden	gronder
 choose	chose	chosen	choisir
-cling	clung	clung 	s'accrocher
+cling	clung	clung	s'accrocher
 clothe	clad, clothed	clad, clothed	habiller, recouvrir
 come	came	come	venir
 cost	cost	cost	coûter
@@ -39,7 +39,7 @@ do	did	done	faire
 draw	drew	drawn	dessiner, tirer
 dream	dreamt, dreamed	dreamt, dreamed	rêver
 drink	drank	drunk	boire
-drive 	drove	driven	conduire
+drive	drove	driven	conduire
 dwell	dwelt	dwelt, dwelled	habiter
 eat	ate	eaten	manger
 fall	fell	fallen	tomber
