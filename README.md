@@ -5,7 +5,7 @@ This is a reviewer based on a word list. It randomly chooses one word on one lin
 
 ## Usage
 
-<p>Clone the repository, create a list *(if you don't want to learn the English irregular verbs translated in French)*, and run </p>
+<p>Clone the repository, create a list <em>(if you don't want to learn the English irregular verbs translated in French)</em>, and run </p>
 
 ```gcc main.c -O1 -o lesson_review; ./lesson_review```
 
